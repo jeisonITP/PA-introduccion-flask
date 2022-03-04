@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 import mysql.connector
 
 db = mysql.connector.connect(
@@ -27,6 +27,21 @@ def index():
 @app.get("/crear")
 def crearProducto():
     return render_template("crear.html")
+
+@app.post("/crear")
+def crearProductoPost():
+    nombre = request.form.get('nombre')
+    price = request.form.get('price')
+    
+    cursor = db.cursor()
+    
+    cursor.execute("insert into productos(nombre, price) values(%s,%s)", (
+        nombre,
+        price,
+    ))
+    
+    cursor.close()
+    return redirect(url_for('index'))
 
 @app.get("/contacto")
 def contacto():
