@@ -1,0 +1,57 @@
+1. Registro de usuarios
+    - Información del usuario:
+        Nombre
+        email
+        contraseña
+    - Email de bienvenida y confirmación
+    - Reenvio del email de confirmación
+    - Validación de datos:
+        Email no se encuentre registrado
+        Contraseña cumpla unas politicas
+            - Minimo 8 caracteres
+            - Tenga una mayuscula
+            - Tenga un número
+            - Tenga un caracter especial
+    - Encriptación de la contraseña
+
+2. Inicio de sesión
+    - Formulario de Inicio
+        - Email
+        - Contraseña
+    - Validación:
+        - Usuario este confirmado
+
+3. Reestablecer la contraseña
+    - Formulario de Reestablecer la contraseña
+        - Email
+    - Correo con instructivo para recuperar la contraseña
+
+4. Formulario para compartir archivos (Acceso con login)
+    - Nombre
+    - Archivo
+    - Validaciones
+
+5. Listado de mis archivos (Acceso con login)
+    - Acciones:
+        Crear
+        Editar
+        Eliminar
+        Compartir enlace de un archivo
+
+6. Vista previa del archivo (Acceso publico)
+    - Nombre
+    - Tipo archivo
+    - Peso del archivo
+    - Previsualizacion (Icono del tipo de archivo, o la imagen)
+    - Descargar
+
+7. Extras
+    - Validaciones en el servidor
+    - Retroalimentaciones
+    - Formularios sin perder informacion
+    - Diseño
+    - Arquitectura MVC
+        - Modelo => SQL
+        - Vista => templates
+        - Controlador => 
+    - Heroku

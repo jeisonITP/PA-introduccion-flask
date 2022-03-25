@@ -1,26 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
-import mysql.connector
-
-db = mysql.connector.connect(
-    host='172.17.3.7',
-    user='productos',
-    password='productos',
-    database='productos',
-    port=3306
-)
-db.autocommit = True
+from flask import Flask, render_template, request, redirect, url_for, flash
+from models import productosModel
 
 app = Flask(__name__)
+app.secret_key = 'fjifjidfjied5df45df485h48@'
 
 @app.get("/")
 def index():
-    cursor = db.cursor(dictionary=True)
-    
-    cursor.execute('select * from productos')
-    
-    productos = cursor.fetchall()
-    #producto = cursor.fetchone()
-    cursor.close()
+    productos = productosModel.obtenerProductos()
     
     return render_template("index.html", productos=productos)
 
@@ -31,16 +17,31 @@ def crearProducto():
 @app.post("/crear")
 def crearProductoPost():
     nombre = request.form.get('nombre')
-    price = request.form.get('price')
     
-    cursor = db.cursor()
+    try:
+        price = int(request.form.get('price'))
+    except:
+        price = 0
+        
+    isValid = True
     
-    cursor.execute("insert into productos(nombre, price) values(%s,%s)", (
-        nombre,
-        price,
-    ))
+    if nombre == "":
+        isValid = False
+        flash("el nombre es obligatorio")
+
+    if price == "":
+        isValid = False
+        flash("el precio es obligatorio")
+
+    if price <= 0:
+        isValid = False
+        flash("el precio debe ser mayor a cero")
     
-    cursor.close()
+    if isValid == False:
+        return render_template("crear.html", nombre = nombre, price = price)
+    
+    productosModel.crearProducto(nombre=nombre, price=price)
+    
     return redirect(url_for('index'))
 
 @app.get("/contacto")
