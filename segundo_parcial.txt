@@ -14,7 +14,7 @@
             - Tenga un caracter especial
     - Encriptación de la contraseña
 
-2. Inicio de sesión
+2. Inicio de sesión 07 Abril 2022
     - Formulario de Inicio
         - Email
         - Contraseña
