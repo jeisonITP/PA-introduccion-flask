@@ -1,46 +1,40 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from models import productosModel
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from controllers import productosController
 
 app = Flask(__name__)
 app.secret_key = 'fjifjidfjied5df45df485h48@'
 
+def estaIniciado():
+    return True if 'usuario_id' in session else False
+
 @app.get("/")
 def index():
-    productos = productosModel.obtenerProductos()
+    if not estaIniciado():
+        return redirect(url_for('loginForm'))
+    
+    productos = productosController.listarProductos()
     
     return render_template("index.html", productos=productos)
 
 @app.get("/crear")
 def crearProducto():
+    if not estaIniciado():
+        return redirect(url_for('loginForm'))
     return render_template("crear.html")
 
 @app.post("/crear")
 def crearProductoPost():
+    if not estaIniciado():
+        return redirect(url_for('loginForm'))
+    
     nombre = request.form.get('nombre')
     
-    try:
-        price = int(request.form.get('price'))
-    except:
-        price = 0
-        
-    isValid = True
+    imagen = request.files['imagen']
     
-    if nombre == "":
-        isValid = False
-        flash("el nombre es obligatorio")
-
-    if price == "":
-        isValid = False
-        flash("el precio es obligatorio")
-
-    if price <= 0:
-        isValid = False
-        flash("el precio debe ser mayor a cero")
+    price = request.form.get('price')
     
-    if isValid == False:
+    if not productosController.crearProductoController(nombre, price, imagen):
         return render_template("crear.html", nombre = nombre, price = price)
-    
-    productosModel.crearProducto(nombre=nombre, price=price)
     
     return redirect(url_for('index'))
 
@@ -56,6 +50,30 @@ def editarContacto(contactoId):
         contactoId = contactoId, 
         suma = suma
     )
+    
+@app.get("/login")
+def loginForm():
+    return render_template('login.html')
+
+@app.post("/login")
+def loginPost():
+    
+    #validacion de usuario y contraseña
+    
+    
+    #Creacion de la sesion
+    session['usuario_id'] = 5
+    
+    return "Iniciando"
+
+@app.get("/cerrar_sesion")
+def cerrarSesion():
+    if not estaIniciado():
+        return redirect(url_for('loginForm'))
+    
+    session.clear()
+    
+    return redirect(url_for('loginForm'))
 
 #/edad/27 Tu naciste en el año 19
 

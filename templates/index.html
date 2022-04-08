@@ -20,6 +20,7 @@
         <th>ID</th>
         <th>NOMBRE</th>
         <th>PRECIO</th>
+        <th>IMAGEN</th>
     </tr>
 
     {% for producto in productos %}
@@ -27,6 +28,11 @@
         <td>{{ producto['id'] }}</td>
         <td>{{ producto['nombre'] }}</td>
         <td>{{ producto['price'] }}</td>
+        <td>
+            {% if producto['imagen']: %}
+                <img src="{{ producto['imagen'] }}">
+            {% endif %}
+        </td>
     </tr>
     {% endfor %}
 

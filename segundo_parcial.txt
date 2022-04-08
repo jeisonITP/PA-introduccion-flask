@@ -21,12 +21,12 @@
     - Validación:
         - Usuario este confirmado
 
-3. Reestablecer la contraseña
+3. Reestablecer la contraseña (21 Abril)
     - Formulario de Reestablecer la contraseña
         - Email
     - Correo con instructivo para recuperar la contraseña
 
-4. Formulario para compartir archivos (Acceso con login)
+4. Formulario para compartir archivos (Acceso con login) (21 Abril)
     - Nombre
     - Archivo
     - Validaciones

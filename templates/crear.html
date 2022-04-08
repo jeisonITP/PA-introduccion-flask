@@ -17,7 +17,13 @@ Crear producto
         {% endif %}
     {% endwith %}
 
-    <form action="{{ url_for('crearProductoPost') }}" method="POST">
+    <form action="{{ url_for('crearProductoPost') }}" 
+        enctype="multipart/form-data"
+        method="POST">
+        <div>
+            <label for="">Imagen</label>
+            <input type="file" name="imagen">
+        </div>
         <div>
             <label for="">Nombre</label>
             <input type="text" name="nombre" value="{{ nombre }}">
